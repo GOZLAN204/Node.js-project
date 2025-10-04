@@ -5,6 +5,7 @@ const router = express.Router();
 let projects = [];
 let nextId = 1;
 
+// Validation
 function validateProject(body, { partial = false } = {}) {
 	const errors = [];
 
@@ -73,3 +74,40 @@ router.post('/', (req, res) => {
 	projects.push(project);
 	res.status(201).json(project);
 });
+
+// Update (partial or full)
+router.put('/:id', (req, res) => {
+	const id = Number(req.params.id);
+	const project = projects.find(p => p && p.id === id);
+	if (!project) return res.status(404).json({ error: 'Not found' });
+
+	const errors = validateProject(req.body, { partial: true });
+	if (errors.length) return res.status(400).json({ errors });
+
+	if (req.body.name !== undefined) project.name = req.body.name.trim();
+	if (req.body.description !== undefined) project.description = req.body.description.trim();
+	if (req.body.image !== undefined) project.image = req.body.image.trim();
+	if (req.body.rating !== undefined) project.rating = req.body.rating;
+
+	res.json(project);
+});
+
+// Delete
+router.delete('/:id', (req, res) => {
+	const id = Number(req.params.id);
+	const idx = projects.findIndex(p => p && p.id === id);
+	if (idx === -1) return res.status(404).json({ error: 'Not found' });
+	const [deleted] = projects.splice(idx, 1);
+	res.json(deleted || { message: 'ok' });
+});
+
+// Rate (increment by 1)
+router.post('/:id/rate', (req, res) => {
+	const id = Number(req.params.id);
+	const project = projects.find(p => p && p.id === id);
+	if (!project) return res.status(404).json({ error: 'Not found' });
+	project.rating += 1;
+	res.json(project);
+});
+
+module.exports = router;
