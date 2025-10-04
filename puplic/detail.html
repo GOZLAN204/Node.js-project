@@ -1,48 +1,16 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Projects</title>
-	<link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Details</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-	<main class="container">
-		<h1>Projects</h1>
-
-		<section class="form-card">
-			<h2 id="formTitle">Create Project</h2>
-			<form id="projectForm">
-				<input type="hidden" id="projectId" />
-				<label>
-					Name
-					<input id="name" required minlength="2" />
-				</label>
-				<label>
-					Description
-					<textarea id="description" required minlength="2"></textarea>
-				</label>
-				<label>
-					Image URL
-					<input id="image" type="url" required placeholder="https://..." />
-				</label>
-				<label>
-					Rating (number)
-					<input id="rating" type="number" step="1" value="0" />
-				</label>
-				<div class="actions">
-					<button type="submit">Save</button>
-					<button type="button" id="cancelEdit" class="secondary" hidden>Cancel</button>
-				</div>
-				<p id="formErr" class="error"></p>
-			</form>
-		</section>
-
-		<section>
-			<div id="grid" class="grid"></div>
-		</section>
-	</main>
-
-	<script src="app.js"></script>
+  <main class="container">
+    <a href="/" class="back">← Back</a>
+    <div id="detail" class="detail">Loading…</div>
+  </main>
+  <script src="detail.js"></script>
 </body>
 </html>
