@@ -25,3 +25,25 @@ async function fetchJSON(url, options) {
 	}
 	return res.json();
 }
+
+function card(project) {
+	const div = document.createElement('div');
+	div.className = 'card';
+	div.innerHTML = `
+		<img src="${project.image}" alt="${project.name}" />
+		<div class="card-body">
+			<div class="card-title">
+				<span>${project.name}</span>
+				<span>⭐ ${project.rating}</span>
+			</div>
+			<div class="card-actions">
+				<button type="button" data-edit="${project.id}">Edit</button>
+				<button type="button" data-delete="${project.id}" class="secondary">Delete</button>
+				<a href="detail.html?id=${project.id}">
+					<button type="button">Open</button>
+				</a>
+			</div>
+		</div>
+	`;
+	return div;
+}
