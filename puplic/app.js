@@ -62,3 +62,38 @@ function resetForm() {
 	formTitle.textContent = 'Create Project';
 	formErr.textContent = '';
 }
+
+
+form.addEventListener('submit', async (e) => {
+	e.preventDefault();
+	formErr.textContent = '';
+
+	const payload = {
+		name: nameField.value.trim(),
+		description: descField.value.trim(),
+		image: imageField.value.trim(),
+		rating: Number(ratingField.value || 0)
+	};
+
+	try {
+		if (idField.value) {
+			await fetchJSON(`${API}/${idField.value}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+		} else {
+			await fetchJSON(API, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+		}
+		resetForm();
+		await load();
+	} catch (err) {
+		formErr.textContent = err.message;
+	}
+});
+
+cancelEditBtn.addEventListener('click', resetForm);
