@@ -4,7 +4,7 @@ const detail = document.getElementById('detail');
 
 function qs(name) {
   return new URL(location.href).searchParams.get(name);
-} 
+}
 
 async function fetchJSON(url, options) {
   const res = await fetch(url, options);
@@ -18,6 +18,7 @@ async function fetchJSON(url, options) {
   }
   return res.json();
 }
+
 async function render() {
   const id = qs('id');
   if (!id) {

@@ -47,11 +47,13 @@ function card(project) {
 	`;
 	return div;
 }
+
 async function load() {
 	grid.innerHTML = '';
 	const items = await fetchJSON(API);
 	items.forEach(p => grid.appendChild(card(p)));
 }
+
 function resetForm() {
 	idField.value = '';
 	nameField.value = '';
@@ -62,7 +64,6 @@ function resetForm() {
 	formTitle.textContent = 'Create Project';
 	formErr.textContent = '';
 }
-
 
 form.addEventListener('submit', async (e) => {
 	e.preventDefault();
@@ -97,6 +98,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 cancelEditBtn.addEventListener('click', resetForm);
+
 grid.addEventListener('click', async (e) => {
 	const editId = e.target.getAttribute('data-edit');
 	const delId = e.target.getAttribute('data-delete');
