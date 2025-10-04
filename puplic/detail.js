@@ -18,3 +18,34 @@ async function fetchJSON(url, options) {
   }
   return res.json();
 }
+async function render() {
+  const id = qs('id');
+  if (!id) {
+    detail.textContent = 'Missing id in URL (detail.html?id=...)';
+    return;
+  }
+  try {
+    const p = await fetchJSON(`${API}/${id}`);
+    detail.innerHTML = `
+      <h1>${p.name}</h1>
+      <img src="${p.image}" alt="${p.name}">
+      <p>${p.description}</p>
+      <p><strong>Rating:</strong> <span id="rating">⭐ ${p.rating}</span></p>
+      <div class="actions">
+        <button id="rateBtn">Add a point</button>
+        <a href="/"><button type="button" class="secondary">Back</button></a>
+      </div>
+    `;
+    document.getElementById('rateBtn').addEventListener('click', async () => {
+      try {
+        const updated = await fetchJSON(`${API}/${id}/rate`, { method: 'POST' });
+        document.getElementById('rating').textContent = `⭐ ${updated.rating}`;
+      } catch (e) {
+        alert(e.message);
+      }
+    });
+  } catch (e) {
+    detail.textContent = `Failed to load project: ${e.message}`;
+    console.error(e);
+  }
+}
