@@ -47,3 +47,18 @@ function card(project) {
 	`;
 	return div;
 }
+async function load() {
+	grid.innerHTML = '';
+	const items = await fetchJSON(API);
+	items.forEach(p => grid.appendChild(card(p)));
+}
+function resetForm() {
+	idField.value = '';
+	nameField.value = '';
+	descField.value = '';
+	imageField.value = '';
+	ratingField.value = '0';
+	cancelEditBtn.hidden = true;
+	formTitle.textContent = 'Create Project';
+	formErr.textContent = '';
+}
