@@ -49,3 +49,5 @@ async function render() {
     console.error(e);
   }
 }
+fetch('/api/projects/2').then(r=>r.status).then(console.log);
+render();
