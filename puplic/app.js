@@ -97,3 +97,29 @@ form.addEventListener('submit', async (e) => {
 });
 
 cancelEditBtn.addEventListener('click', resetForm);
+grid.addEventListener('click', async (e) => {
+	const editId = e.target.getAttribute('data-edit');
+	const delId = e.target.getAttribute('data-delete');
+
+	try {
+		if (editId) {
+			const p = await fetchJSON(`${API}/${editId}`);
+			idField.value = p.id;
+			nameField.value = p.name;
+			descField.value = p.description;
+			imageField.value = p.image;
+			ratingField.value = p.rating;
+			formTitle.textContent = 'Edit Project';
+			cancelEditBtn.hidden = false;
+		} else if (delId) {
+			const ok = confirm('Delete project?');
+			if (!ok) return;
+			await fetchJSON(`${API}/${delId}`, { method: 'DELETE' });
+			await load();
+		}
+	} catch (err) {
+		alert(err.message);
+	}
+});
+
+load();
